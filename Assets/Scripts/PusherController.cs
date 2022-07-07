@@ -8,18 +8,18 @@ public class PusherController : MonoBehaviour
     public Rigidbody playerRb;
     public GameObject forceSource;
     public float force = 100;
-    public KeyCode pusherPressKeyCode;
+    // public KeyCode pusherPressKeyCode;
 
     [Header("Editor Only")] public GameObject source;
 
     private void Update()
     {
-        if (Input.GetKeyDown(pusherPressKeyCode))
-        {
-            if (playerRb.Equals(null)) return;
-
-            var forceSourcePosition = forceSource.transform.position;
-            playerRb.AddExplosionForce(force, forceSourcePosition,5);
-        }
+        // if (Input.GetKeyDown(pusherPressKeyCode))
+        // {
+        //     if (playerRb.Equals(null)) return;
+        //
+        //     var forceSourcePosition = forceSource.transform.position;
+        //     playerRb.AddExplosionForce(force, forceSourcePosition,5);
+        // }
     }
 }
