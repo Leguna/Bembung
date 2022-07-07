@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class PusherController : MonoBehaviour
@@ -9,17 +10,16 @@ public class PusherController : MonoBehaviour
     public float force = 100;
     public KeyCode pusherPressKeyCode;
 
+    [Header("Editor Only")] public GameObject source;
+
     private void Update()
     {
         if (Input.GetKeyDown(pusherPressKeyCode))
         {
             if (playerRb.Equals(null)) return;
-            
+
             var forceSourcePosition = forceSource.transform.position;
-            Vector3 dir = forceSourcePosition - transform.position;
-            dir = dir.normalized;
-            
-            playerRb.AddForceAtPosition(dir * force,forceSourcePosition);
+            playerRb.AddExplosionForce(force, forceSourcePosition,5);
         }
     }
 }
