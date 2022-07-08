@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-namespace DefaultNamespace
+public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-    public class GameManager : MonoBehaviour
-    {
-         
-    }
+    public bool isGameplayStarted = false;
+    public bool isGamePaused = false;
+    
+    [Header("Timer")]
+    public float timer;
+    public bool gameplayStartCountdown;
+
 }
