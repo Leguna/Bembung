@@ -1,5 +1,14 @@
+using System;
 using UnityEditor;
 using UnityEngine;
+
+enum PusherType
+{
+    pusherOne = 0,
+    pusherTwo = 1,
+    pusherThree = 2,
+    pusherFour = 3,
+}
 
 public class PusherController : MonoBehaviour
 {
@@ -8,18 +17,27 @@ public class PusherController : MonoBehaviour
     public Rigidbody playerRb;
     public GameObject forceSource;
     public float force = 100;
-    // public KeyCode pusherPressKeyCode;
 
-    [Header("Editor Only")] public GameObject source;
+    private PlayerInput _playerInput;
+
+    private void Awake()
+    {
+        _playerInput = new PlayerInput();
+    }
+
+    private void OnDestroy()
+    {
+        throw new NotImplementedException();
+    }
 
     private void Update()
     {
-        // if (Input.GetKeyDown(pusherPressKeyCode))
-        // {
-        //     if (playerRb.Equals(null)) return;
-        //
-        //     var forceSourcePosition = forceSource.transform.position;
-        //     playerRb.AddExplosionForce(force, forceSourcePosition,5);
-        // }
+        
+    }
+
+    private void AddForceFrom(float addedForce, PusherType pusherType)
+    {
+        var forceSourcePosition = forceSource.transform.position;
+        playerRb.AddExplosionForce(addedForce, forceSourcePosition,5);
     }
 }
