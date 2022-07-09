@@ -21,6 +21,7 @@ public class PusherController : MonoBehaviour
     private PlayerInput _playerInput;
     public PusherType pusherType;
     private List<Rigidbody> _listRingRb;
+    private GameManager _gameManager;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class PusherController : MonoBehaviour
     private void Start()
     {
         _listRingRb = GamePrefabs.Instance.ringRigidbodyList;
+        _gameManager = GameManager.Instance;
         switch (pusherType)
         {
             case PusherType.PusherOne:
@@ -66,10 +68,9 @@ public class PusherController : MonoBehaviour
 
     private void Pushing(InputAction.CallbackContext ctx)
     {
-        print(ctx);
-        AddForceFrom(force);
+        if(_gameManager.isGameplayStarted && !_gameManager.isGamePaused)
+            AddForceFrom(force);
     }
-
 
     private void AddForceFrom(float addedForce)
     {

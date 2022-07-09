@@ -6,18 +6,14 @@ using UnityEngine;
 public class GamePrefabs : SingletonMonoBehaviour<GamePrefabs>
 {
     [Header("Gameplay")] public List<GameObject> ringList;
-    public List<Rigidbody> ringRigidbodyList;
+    public GameObject ringPrefab;
+    public GameObject goalPrefab;
+    public GameObject ringsParent;
+    [HideInInspector] public List<Rigidbody> ringRigidbodyList;
     public List<GameObject> mechanicList;
+    public List<GameObject> goalList;
+    public List<GameObject> ringSpawnPositionList;
 
     [Header("UI")] public TMP_Text timerText;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        foreach (GameObject o in ringList)
-        {
-            o.TryGetComponent(out Rigidbody rb);
-            ringRigidbodyList.Add(rb);
-        }
-    }
 }
