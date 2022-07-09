@@ -17,6 +17,7 @@ public class RingGoalTrigger : MonoBehaviour
             onTriggerEnterCallback.Invoke();
             Debug.Log(ringObjects.Count);
         }
+        
     }
 
     private void OnTriggerExit(Collider other)
