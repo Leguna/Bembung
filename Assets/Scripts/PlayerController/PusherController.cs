@@ -1,43 +1,82 @@
-using System;
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-enum PusherType
+public enum PusherType
 {
-    pusherOne = 0,
-    pusherTwo = 1,
-    pusherThree = 2,
-    pusherFour = 3,
+    PusherOne = 0,
+    PusherTwo = 1,
+    PusherThree = 2,
+    PusherFour = 3,
+    PusherFive = 4,
+    PusherSix = 5,
 }
 
 public class PusherController : MonoBehaviour
 {
-    private static readonly int Push = Animator.StringToHash("Push");
-
-    public Rigidbody playerRb;
     public GameObject forceSource;
     public float force = 100;
+    public float explosionRadius = 5;
 
     private PlayerInput _playerInput;
+    public PusherType pusherType;
+    private List<Rigidbody> _listRingRb;
 
     private void Awake()
     {
         _playerInput = new PlayerInput();
     }
 
+    private void OnEnable()
+    {
+        _playerInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.Disable();
+    }
+
+    private void Start()
+    {
+        _listRingRb = GamePrefabs.Instance.ringRigidbodyList;
+        switch (pusherType)
+        {
+            case PusherType.PusherOne:
+                _playerInput.Gameplay.Controller1.performed += Pushing;
+                break;
+            case PusherType.PusherTwo:
+                _playerInput.Gameplay.Controller2.performed += Pushing;
+                break;
+        }
+    }
+
     private void OnDestroy()
     {
-        throw new NotImplementedException();
+        switch (pusherType)
+        {
+            case PusherType.PusherOne:
+                _playerInput.Gameplay.Controller1.performed -= Pushing;
+                break;
+            case PusherType.PusherTwo:
+                _playerInput.Gameplay.Controller2.performed -= Pushing;
+                break;
+        }
     }
 
-    private void Update()
+    private void Pushing(InputAction.CallbackContext ctx)
     {
-        
+        print(ctx);
+        AddForceFrom(force);
     }
 
-    private void AddForceFrom(float addedForce, PusherType pusherType)
+
+    private void AddForceFrom(float addedForce)
     {
         var forceSourcePosition = forceSource.transform.position;
-        playerRb.AddExplosionForce(addedForce, forceSourcePosition,5);
+        foreach (Rigidbody o in _listRingRb)
+        {
+            o.AddExplosionForce(addedForce, forceSourcePosition, explosionRadius);
+        }
     }
 }

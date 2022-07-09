@@ -1,24 +1,24 @@
-﻿
+﻿using UnityEngine;
 
-using System;
-using UnityEngine;
-
-public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T: MonoBehaviour
+namespace Base
 {
-    private static T _instance;
-
-    public static T Instance => _instance;
-
-    protected virtual void Awake()
+    public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T: MonoBehaviour
     {
-        if (_instance == null)
+        private static T _instance;
+
+        public static T Instance => _instance;
+
+        protected virtual void Awake()
         {
-            _instance = this as T;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+            if (_instance == null)
+            {
+                _instance = this as T;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         
+        }
     }
 }
