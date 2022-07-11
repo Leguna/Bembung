@@ -15,5 +15,8 @@ public class GamePrefabs : SingletonMonoBehaviour<GamePrefabs>
     public List<GameObject> ringSpawnPositionList;
 
     [Header("UI")] public TMP_Text timerText;
-
+    public TMP_Text scoreText;
+    public TMP_Text countDownText;
+    public GameObject gameoverUI;
+    public GameObject gameplayUI;
 }

@@ -9,15 +9,21 @@ public class RingGoalTrigger : MonoBehaviour
     public UnityEvent onTriggerEnterCallback;
     public UnityEvent onTriggerExitCallback;
 
+    private GameManager _gameManager;
+
+    private void Start()
+    {
+        _gameManager = GameManager.Instance;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(StringConstant.RingTag))
         {
             ringObjects.Add(other.transform.parent.gameObject);
             onTriggerEnterCallback.Invoke();
-            Debug.Log(ringObjects.Count);
+            _gameManager.UpdateScore(++_gameManager.score);
         }
-        
     }
 
     private void OnTriggerExit(Collider other)
@@ -26,7 +32,7 @@ public class RingGoalTrigger : MonoBehaviour
         {
             ringObjects.Remove(other.transform.parent.gameObject);
             onTriggerExitCallback.Invoke();
-            Debug.Log(ringObjects.Count);
+            _gameManager.UpdateScore(--_gameManager.score);
         }
     }
 }
