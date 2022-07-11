@@ -18,7 +18,7 @@ public class RingGoalTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(StringConstant.RingTag))
+        if (other.CompareTag(StringConstant.RingTag) && enabled)
         {
             ringObjects.Add(other.transform.parent.gameObject);
             onTriggerEnterCallback.Invoke();
@@ -28,7 +28,7 @@ public class RingGoalTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(StringConstant.RingTag))
+        if (other.CompareTag(StringConstant.RingTag) && enabled)
         {
             ringObjects.Remove(other.transform.parent.gameObject);
             onTriggerExitCallback.Invoke();

@@ -22,6 +22,7 @@ public class PusherController : MonoBehaviour
     public PusherType pusherType;
     private List<Rigidbody> _listRingRb;
     private GameManager _gameManager;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class PusherController : MonoBehaviour
     {
         _listRingRb = GamePrefabs.Instance.ringRigidbodyList;
         _gameManager = GameManager.Instance;
+        TryGetComponent(out _audioSource);
         switch (pusherType)
         {
             case PusherType.PusherOne:
@@ -68,8 +70,11 @@ public class PusherController : MonoBehaviour
 
     private void Pushing(InputAction.CallbackContext ctx)
     {
-        if(_gameManager.isGameplayStarted && !_gameManager.isGamePaused)
+        if (_gameManager.isGameplayStarted && !_gameManager.isGamePaused)
+        {
             AddForceFrom(force);
+            _audioSource.Play();
+        }
     }
 
     private void AddForceFrom(float addedForce)

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Base;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utilities;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
@@ -26,6 +25,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         string newTimeText = $"Time:\n{StringUtils.FormatTime(timeInSecond)}";
         _gamePrefabs.timerText.text = newTimeText;
+        _gamePrefabs.gameOverTimeText.text = newTimeText;
     }
 
     private void Update()
@@ -35,10 +35,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             gameTime += Time.deltaTime;
             UpdateTimeUI(gameTime);
         }
-    }
-
-    private void TimelineStart()
-    {
     }
 
     private void CountDownStart()
@@ -67,8 +63,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void UpdateScore(float newScore)
     {
         score = newScore;
-        _gamePrefabs.scoreText.text = $"Score:\n{newScore:0}";
-        if (GameCompleteCheck()) ShowScoreMenu();
+        string newScoreText = $"Score:\n{newScore:0}";
+        _gamePrefabs.scoreText.text = newScoreText;
+        _gamePrefabs.gameOverScoreText.text = newScoreText;
+        if (GameCompleteCheck())
+        {
+            ShowScoreMenu();
+            isGamePaused = true;
+            isGameplayStarted = false;
+        }
     }
 
 
@@ -77,17 +80,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private void ShowScoreMenu()
     {
         _gamePrefabs.gameplayUI.SetActive(false);
-        _gamePrefabs.gameoverUI.SetActive(true);
-    }
-
-
-    public void BackToMenu()
-    {
-        SceneManager.LoadScene(sceneBuildIndex: 0);
-    }
-
-    public void ReloadScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _gamePrefabs.gameOverUI.SetActive(true);
     }
 }
