@@ -76,3 +76,4 @@ crashlytics-build.properties
 */ERP
 
 /Assets/LeanTween/Examples/
+*.keystore

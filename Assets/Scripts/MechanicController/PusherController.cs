@@ -44,6 +44,8 @@ public class PusherController : MonoBehaviour
         _listRingRb = GamePrefabs.Instance.ringRigidbodyList;
         _gameManager = GameManager.Instance;
         TryGetComponent(out _audioSource);
+
+        _playerInput.Gameplay.TouchX.performed += OnTouch;
         switch (pusherType)
         {
             case PusherType.PusherOne:
@@ -54,6 +56,20 @@ public class PusherController : MonoBehaviour
                 break;
         }
     }
+
+    private void OnTouch(InputAction.CallbackContext ctx)
+    {
+        var pos = ctx.ReadValue<float>();
+        if (pos < Screen.width / 2f && pusherType == PusherType.PusherOne)
+        {
+            Pushing(ctx);
+        }
+        else if (pos > Screen.width / 2f && pusherType == PusherType.PusherTwo)
+        {
+            Pushing(ctx);
+        }
+    }
+
 
     private void OnDestroy()
     {
