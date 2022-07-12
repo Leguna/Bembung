@@ -2,7 +2,7 @@
 Game about inserting ring with mechanic into stick ._.
 
 ## Video
-[Here's Video Preview](https://youtube.com/shorts/Mi50M1BwAc4)
+[Here's Video Preview](https://www.youtube.com/watch?v=r3WPP6RSAas)
 
 ## Screenshot
 ![Menu](https://github.com/Leguna/Bembung/blob/master/BembungPreview/SS%20(4).png)
