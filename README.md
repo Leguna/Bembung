@@ -1,6 +1,9 @@
 # Bembung
 Game about inserting ring with mechanic into stick ._.
 
+# Publish
+[Playstore Link](https://play.google.com/store/apps/details?id=com.arksana.bembung)
+
 ## Video
 [Here's Video Preview](https://www.youtube.com/watch?v=r3WPP6RSAas)
 
