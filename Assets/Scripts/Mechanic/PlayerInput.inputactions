@@ -87,12 +87,21 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TouchX",
+                    "name": "TouchPosition",
                     "type": "PassThrough",
                     "id": "10bc5209-50f6-44c4-bcaa-183b53a3ed50",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TouchTap",
+                    "type": "Button",
+                    "id": "14570cd6-424a-40b2-ade5-284637bcb5cd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 }
             ],
@@ -495,12 +504,23 @@
                 },
                 {
                     "name": "",
-                    "id": "0ee703aa-fa38-4d4e-9bfa-5a1bf09ff0df",
-                    "path": "<Touchscreen>/position/x",
+                    "id": "0c28e139-670f-4d09-9abd-1e43f23b113e",
+                    "path": "<Touchscreen>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "BembungGamePlay",
-                    "action": "TouchX",
+                    "action": "TouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ece44fa-2f8b-4478-8687-34e3e466754f",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "BembungGamePlay",
+                    "action": "TouchTap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

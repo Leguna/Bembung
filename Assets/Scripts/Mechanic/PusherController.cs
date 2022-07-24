@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public enum PusherType
 {
@@ -27,6 +29,7 @@ public class PusherController : MonoBehaviour
     private void Awake()
     {
         _playerInput = new PlayerInput();
+        EnhancedTouchSupport.Enable();
     }
 
     private void OnEnable()
@@ -44,8 +47,8 @@ public class PusherController : MonoBehaviour
         _listRingRb = GamePrefabs.Instance.ringRigidbodyList;
         _gameManager = GameManager.Instance;
         TryGetComponent(out _audioSource);
+        _playerInput.Gameplay.TouchTap.performed += OnTouch;
 
-        _playerInput.Gameplay.TouchX.performed += OnTouch;
         switch (pusherType)
         {
             case PusherType.PusherOne:
@@ -57,16 +60,20 @@ public class PusherController : MonoBehaviour
         }
     }
 
+
     private void OnTouch(InputAction.CallbackContext ctx)
     {
-        var pos = ctx.ReadValue<float>();
-        if (pos < Screen.width / 2f && pusherType == PusherType.PusherOne)
+        try
         {
-            Pushing(ctx);
+            var posX = _playerInput.Gameplay.TouchPosition.ReadValue<Vector2>().x;
+            if (posX < Screen.width / 2f && pusherType == PusherType.PusherOne)
+                Pushing(ctx);
+            else if (posX > Screen.width / 2f && pusherType == PusherType.PusherTwo)
+                Pushing(ctx);
         }
-        else if (pos > Screen.width / 2f && pusherType == PusherType.PusherTwo)
+        catch (Exception e)
         {
-            Pushing(ctx);
+            Debug.Log(e);
         }
     }
 
@@ -86,19 +93,14 @@ public class PusherController : MonoBehaviour
 
     private void Pushing(InputAction.CallbackContext ctx)
     {
-        if (_gameManager.isGameplayStarted && !_gameManager.isGamePaused)
-        {
-            AddForceFrom(force);
-            _audioSource.Play();
-        }
+        if (!_gameManager.isGameplayStarted || _gameManager.isGamePaused) return;
+        AddForceFrom(force);
+        _audioSource.Play();
     }
 
     private void AddForceFrom(float addedForce)
     {
         var forceSourcePosition = forceSource.transform.position;
-        foreach (Rigidbody o in _listRingRb)
-        {
-            o.AddExplosionForce(addedForce, forceSourcePosition, explosionRadius);
-        }
+        foreach (Rigidbody o in _listRingRb) o.AddExplosionForce(addedForce, forceSourcePosition, explosionRadius);
     }
 }
