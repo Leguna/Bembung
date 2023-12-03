@@ -3,11 +3,11 @@
 public class SpawnManager : MonoBehaviour
 {
     private GamePrefabs _gamePrefabs;
-    private GameManager _gameManager;
+    private GameRunner _gameRunner;
 
     private void Start()
     {
-        _gameManager = GameManager.Instance;
+        _gameRunner = GameRunner.Instance;
         _gamePrefabs = GamePrefabs.Instance;
 
         foreach (GameObject o in _gamePrefabs.ringSpawnPositionList)

@@ -515,11 +515,33 @@
                 },
                 {
                     "name": "",
+                    "id": "852771c3-c729-4974-9ac4-e55e8a9ddcc6",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "1ece44fa-2f8b-4478-8687-34e3e466754f",
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "BembungGamePlay",
+                    "action": "TouchTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c2ad165-a2c9-4bec-a486-759f53017410",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "TouchTap",
                     "isComposite": false,
                     "isPartOfComposite": false

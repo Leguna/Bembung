@@ -23,7 +23,7 @@ public class PusherController : MonoBehaviour
     private PlayerInput _playerInput;
     public PusherType pusherType;
     private List<Rigidbody> _listRingRb;
-    private GameManager _gameManager;
+    private GameRunner _gameRunner;
     private AudioSource _audioSource;
 
     private void Awake()
@@ -32,20 +32,14 @@ public class PusherController : MonoBehaviour
         EnhancedTouchSupport.Enable();
     }
 
-    private void OnEnable()
-    {
-        _playerInput.Enable();
-    }
+    private void OnEnable() => _playerInput.Enable();
 
-    private void OnDisable()
-    {
-        _playerInput.Disable();
-    }
+    private void OnDisable() => _playerInput.Disable();
 
     private void Start()
     {
         _listRingRb = GamePrefabs.Instance.ringRigidbodyList;
-        _gameManager = GameManager.Instance;
+        _gameRunner = GameRunner.Instance;
         TryGetComponent(out _audioSource);
         _playerInput.Gameplay.TouchTap.performed += OnTouch;
 
@@ -93,7 +87,7 @@ public class PusherController : MonoBehaviour
 
     private void Pushing(InputAction.CallbackContext ctx)
     {
-        if (!_gameManager.isGameplayStarted || _gameManager.isGamePaused) return;
+        if (!_gameRunner.isGameplayStarted || _gameRunner.isGamePaused) return;
         AddForceFrom(force);
         _audioSource.Play();
     }

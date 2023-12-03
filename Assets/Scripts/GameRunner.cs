@@ -3,7 +3,7 @@ using Base;
 using UnityEngine;
 using Utilities;
 
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public class GameRunner : SingletonMonoBehaviour<GameRunner>
 {
     public bool isGameplayStarted;
     public bool isGamePaused;
@@ -11,7 +11,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private float _highestTime;
     public float gameTime;
     public float score;
-    
+
     [Header("Timer")] public float countDownTime = 3;
 
     private GamePrefabs _gamePrefabs;
@@ -24,7 +24,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void UpdateTimeUI(float timeInSecond)
     {
-        var newTimeText = $"Time:\n{StringUtils.FormatTime(timeInSecond)}";
+        var newTimeText = $"Time\n{StringUtils.FormatTime(timeInSecond)}";
         _gamePrefabs.timerText.text = newTimeText;
         _gamePrefabs.gameOverTimeText.text = newTimeText;
     }
@@ -49,7 +49,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             _gamePrefabs.countDownText.text = countDownTime.ToString("0");
             if (!(countDownTime <= 0)) continue;
             isGameplayStarted = true;
-            _gamePrefabs.countDownText.text = "Game Start!";
+            _gamePrefabs.countDownText.text = "Game\nStart!";
             _gamePrefabs.countDownText.gameObject.transform.LeanScale(new Vector3(0, 0, 0), 1f);
         }
     }
@@ -57,13 +57,23 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void UpdateScore(float newScore)
     {
         score = newScore;
-        var newScoreText = $"Fastest\n{_highestTime}";
+        var newScoreText = $"Score\n{newScore}";
         _gamePrefabs.scoreText.text = newScoreText;
-        _gamePrefabs.gameOverScoreText.text = newScoreText;
         if (!GameCompleteCheck()) return;
+        SaveHighScore(gameTime);
         ShowScoreMenu();
         isGamePaused = true;
         isGameplayStarted = false;
+    }
+
+    private void SaveHighScore(float time)
+    {
+        _highestTime = PlayerPrefs.GetFloat(StringConst.HighScore);
+        _gamePrefabs.gameOverScoreText.text = $"Fastest\n{StringUtils.FormatTime(_highestTime)}";
+        if (time > _highestTime && _highestTime > 1) return;
+        _gamePrefabs.gameOverScoreText.text = $"Fastest\n{StringUtils.FormatTime(time)}";
+        _highestTime = time;
+        PlayerPrefs.SetFloat(StringConst.HighScore, _highestTime);
     }
 
 
